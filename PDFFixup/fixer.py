@@ -234,10 +234,16 @@ def find_bounding_rectangle((x, y), lines):
 def chars_to_string(chars):
     if not chars:
         return ""
-    rows = sorted(list(set(c.bbox[1] for c in chars)), reverse=True)
+    #for c in chars:
+    #    print c, c.bbox
+    rows = sorted(list(set(round(math.log1p(c.bbox[1]),2) for c in chars)), reverse=True)
     text = ""
     for row in rows:
-        sorted_row = sorted([c for c in chars if c.bbox[1] == row], key=lambda c: c.bbox[0])
+        for c in chars:
+            if round(math.log1p(c.bbox[1]),2) == row :
+                #print c, row
+                pass
+        sorted_row = sorted([c for c in chars if round(math.log1p(c.bbox[1]),2) == row], key=lambda c: c.bbox[0])
         text += "".join(c.get_text() for c in sorted_row)
     return text
 
